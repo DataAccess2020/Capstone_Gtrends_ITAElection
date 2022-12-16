@@ -7,8 +7,11 @@ library(ggplot2)
 #prova 1: keywords per Giorgia Meloni/Fratelli d'Italia
 #confronto cognome/nome + cognome/partito
 
+meloni_key <- c("meloni", "giorgia meloni", "fratelli d'italia")
+
+#get data from Google trends
 meloni <- gtrends(
-  keyword = c("Meloni", "Giorgia Meloni", "fratelli d'italia"),
+  keyword = meloni_key,
   geo = "IT",
   time = "2022-07-21 2022-09-25",
   gprop = c("web"),
@@ -19,16 +22,34 @@ meloni <- gtrends(
   onlyInterest = FALSE
 )
 
-print(meloni$interest_over_time)
-print(meloni)
+#transform into a data frame
 
-data.frame <- as.data.frame(meloni$interest_over_time)
-view(data.frame)
+data.meloni <- as.data.frame(meloni$interest_over_time)
+view(data.meloni)
 
-ggplot(data.frame, aes(x=date, y=hits)) +
-  geom_point(aes(date, hits,color = keyword), position = 'jitter') +
-  geom_smooth(method=lm , color="red", fill="#69b3a2", se=TRUE) +
-  theme(legend.position = "none")
-theme_bw()
+typeof(data.meloni$date)
+typeof(data.meloni$hits)
+typeof(data.meloni$searches)
 
-#vedi plot per evoluzione temporale
+data.meloni$searches <- as.numeric(data.meloni$hits) #transfrom "hits" into a numeric variable 
+
+count(data.meloni$searches)
+
+library(plyr)  #value hits= "<1" become missing "NA", so i transform them in zero
+
+#i create a new recoded variable "searches2"
+data.meloni <- data.meloni %>% 
+  mutate(searches2=mapvalues(searches, from = c(NA),
+                             to = c(0)))
+
+
+#plot: distribution 3 keyword for Giorgia Meloni-----
+
+library(viridis)
+
+ggplot(data.meloni, aes(y = searches2, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  scale_color_viridis(discrete = TRUE, option = "viridis") +
+  theme_bw()
+
+#need to add title, label and other graphic features
