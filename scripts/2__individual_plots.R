@@ -29,9 +29,21 @@ salvini_plot <- ggplot(data.salvini, aes(y = hits_score, x = date, group = keywo
   theme_bw()
 salvini_plot
 
-#plot: - Silvio Berlusconi----
+#plot - Silvio Berlusconi----
 
 berlu_plot <- ggplot(data.berlu, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
   theme_bw()
 berlu_plot
+
+#plot - Giuseppe Conte-----
+conte_plot <- ggplot(data.conte, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  theme_bw()
+conte_plot
+
+#plot - terzo polo: Calenda e Renzi----
+terzopolo_plot <- ggplot(data.3polo, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  theme_bw()
+terzopolo_plot

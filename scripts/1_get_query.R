@@ -118,3 +118,49 @@ view(data.berlu)
 
 data.berlu$hits_score <- as.numeric(data.berlu$hits) 
 
+#keywords GIUSEPPE CONTE/MOVIMENTO 5 STELLE----
+conte_key <- c("conte", "giuseppe conte", "movimento 5 stelle", "m5s")
+
+#get data from Google trends
+conte <- gtrends(
+  keyword = conte_key,
+  geo = "IT",
+  time = "2022-07-21 2022-09-25",
+  gprop = c("web"),
+  hl = "it",
+  compared_breakdown = FALSE,
+  low_search_volume = FALSE,
+  cookie_url = "http://trends.google.com/Cookies/NID",
+  onlyInterest = FALSE
+)
+
+
+data.conte <- as.data.frame(conte$interest_over_time)
+view(data.conte)
+
+data.conte$hits_score <- as.numeric(data.conte$hits) 
+
+#keywords MATTEO RENZI/CARLO CALENDA/TERZO POLO-----
+terzopolo_key <- c("renzi", "calenda", "azione italia viva", "terzo polo")
+
+terzopolo <- gtrends(
+  keyword = terzopolo_key,
+  geo = "IT",
+  time = "2022-07-21 2022-09-25",
+  gprop = c("web"),
+  hl = "it",
+  compared_breakdown = FALSE,
+  low_search_volume = FALSE,
+  cookie_url = "http://trends.google.com/Cookies/NID",
+  onlyInterest = FALSE
+)
+
+data.3polo <- as.data.frame(terzopolo$interest_over_time)
+view(data.3polo)
+
+data.3polo$searches <- as.numeric(data.3polo$hits) 
+
+data.3polo <- data.3polo %>% 
+  mutate(hits_score=mapvalues(searches, from = c(NA),
+                              to = c(0)))
+
