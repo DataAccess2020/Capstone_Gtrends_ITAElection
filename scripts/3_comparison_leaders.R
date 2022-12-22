@@ -40,6 +40,9 @@ party_leaders2 <-  gtrends(
 data_leader1 <- as.data.frame(party_leaders$interest_over_time)
 data_leader2 <- as.data.frame(party_leaders2$interest_over_time)
 
+data_leader2 <- data_leader2[-(1:67),]
+#delete rows in the second data frame which keyword' is "meloni", so we have these only once
+
 #merge the two dataset usign the date as a key
 library(dplyr)
 merge_data <- bind_rows(data_leader1, data_leader2)
@@ -48,7 +51,9 @@ merge_data <- bind_rows(data_leader1, data_leader2)
 
 merge_data$hits_score <- as.numeric(merge_data$hits) 
 
-#plot for all party leaders: surname
+rio::export(merge_data, "all_keywords_complete.csv")
+
+#plot for all party leaders: surname----
 
 leaders_plot <- ggplot(merge_data, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
