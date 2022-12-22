@@ -43,6 +43,7 @@ facet_plots_int <- ggplotly(facet_plots)
 
 #adding "pd" for letta----
 
+#always use keyword "meloni" as key for merge because has the highest value
 pd <- gtrends(
   keyword = c("meloni", "pd"),
   geo = "IT",
@@ -57,15 +58,23 @@ pd <- gtrends(
 
 data_pd <- as.data.frame(pd$interest_over_time)
 
-merge_dataPD <- bind_rows(merge_data, data_pd)
+data_pd <- data_pd[-(1:67),]
 
-merge_dataPD$hits_score <- as.numeric(merge_dataPD$hits)
+merge_data.pd <- bind_rows(merge_data, data_pd)
+
+merge_data.pd$hits_score <- as.numeric(merge_data.pd$hits)
+merge_data.pd$date <- as_date(merge_data.pd$date)
 
 #plot with surnames + "pd"
 
-leaders_plot2 <- ggplot(merge_dataPD, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+leaders_plot.pd <- ggplot(merge_data.pd, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
-  theme_bw()
-leaders_plot2
+  scale_color_manual(values = c("purple3", "deepskyblue3", "darkorange2", "gold3", "orchid3", "red2", "royalblue4", "chartreuse4"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Comparison between leaders + PD", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
 
-#doesn't change anything
+#also considering "pd", doesn't change anything
