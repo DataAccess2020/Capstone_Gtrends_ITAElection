@@ -22,4 +22,50 @@ leaders_plot <- ggplot(merge_data, aes(y = hits_score, x = date, group = keyword
   theme(plot.title = element_text(face = "bold", hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5))
 
-leaders_plot
+leaders_plot_int <- ggplotly(leaders_plot)
+
+#plot with separed lines for each leader------
+
+
+facet_plots <- ggplot(merge_data, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  facet_wrap(~keyword, ncol = 3) +
+  scale_color_manual(values = c("purple3", "deepskyblue3", "darkorange2", "gold3", "orchid3", "royalblue4", "chartreuse4"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Comparison between leaders", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %m", date_breaks = "2 weeks") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+
+facet_plots_int <- ggplotly(facet_plots)
+
+#adding "pd" for letta----
+
+pd <- gtrends(
+  keyword = c("meloni", "pd"),
+  geo = "IT",
+  time = "2022-07-21 2022-09-25",
+  gprop = c("web"),
+  hl = "it",
+  compared_breakdown = FALSE,
+  low_search_volume = FALSE,
+  cookie_url = "http://trends.google.com/Cookies/NID",
+  onlyInterest = FALSE
+)
+
+data_pd <- as.data.frame(pd$interest_over_time)
+
+merge_dataPD <- bind_rows(merge_data, data_pd)
+
+merge_dataPD$hits_score <- as.numeric(merge_dataPD$hits)
+
+#plot with surnames + "pd"
+
+leaders_plot2 <- ggplot(merge_dataPD, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  theme_bw()
+leaders_plot2
+
+#doesn't change anything
