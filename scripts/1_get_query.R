@@ -25,11 +25,7 @@ meloni <- gtrends(
 #transform into a data frame
 
 data.meloni <- as.data.frame(meloni$interest_over_time)
-view(data.meloni)
 
-typeof(data.meloni$date)
-typeof(data.meloni$hits)
-typeof(data.meloni$searches)
 
 data.meloni$searches <- as.numeric(data.meloni$hits) #transfrom "hits" into a numeric variable 
 
@@ -40,6 +36,7 @@ library(plyr)  #value hits= "<1" become missing "NA", so i transform them in zer
 data.meloni <- data.meloni %>% 
   mutate(hits_score=mapvalues(searches, from = c(NA),
                              to = c(0)))
+export(data.meloni, "meloni_keywords.csv")
 
 
 #keywords ENRICO LETTA/PARTITO DEMOCRATICO----
@@ -61,7 +58,6 @@ letta <- gtrends(
 
 
 data.letta <- as.data.frame(letta$interest_over_time)
-view(data.letta)
 
 data.letta$searches <- as.numeric(data.letta$hits) 
 
@@ -69,6 +65,7 @@ data.letta <- data.letta %>%
   mutate(hits_score=mapvalues(searches, from = c(NA),
                               to = c(0)))
 
+export(data.letta, "letta_keywords.csv")
 
 #keywords MATTEO SALVINI/LEGA-----
 salvini_key <- c("salvini", "matteo salvini", "lega per salvini premier", "lega nord")
@@ -88,13 +85,14 @@ salvini <- gtrends(
 
 
 data.salvini <- as.data.frame(salvini$interest_over_time)
-view(data.salvini)
 
 data.salvini$searches <- as.numeric(data.salvini$hits) 
 
 data.salvini <- data.salvini %>% 
   mutate(hits_score=mapvalues(searches, from = c(NA),
                               to = c(0)))
+
+export(data.salvini, "salvini_keywords.csv")
 
 #keywords SILVIO BERLUSCONI/FORZA ITALIA -----
 berlusconi_key <- c("berlusconi", "silvio berlusconi", "forza italia")
@@ -114,9 +112,10 @@ berlusconi <- gtrends(
 
 
 data.berlu <- as.data.frame(berlusconi$interest_over_time)
-view(data.berlu)
 
 data.berlu$hits_score <- as.numeric(data.berlu$hits) 
+
+export(data.berlu, "berlusconi_keywords.csv")
 
 #keywords GIUSEPPE CONTE/MOVIMENTO 5 STELLE----
 conte_key <- c("conte", "giuseppe conte", "movimento 5 stelle", "m5s")
@@ -136,9 +135,10 @@ conte <- gtrends(
 
 
 data.conte <- as.data.frame(conte$interest_over_time)
-view(data.conte)
 
 data.conte$hits_score <- as.numeric(data.conte$hits) 
+
+export(data.conte, "conte_keywords.csv")
 
 #keywords MATTEO RENZI/CARLO CALENDA/TERZO POLO-----
 terzopolo_key <- c("renzi", "calenda", "azione italia viva", "terzo polo")
@@ -156,7 +156,6 @@ terzopolo <- gtrends(
 )
 
 data.3polo <- as.data.frame(terzopolo$interest_over_time)
-view(data.3polo)
 
 data.3polo$searches <- as.numeric(data.3polo$hits) 
 
@@ -164,3 +163,4 @@ data.3polo <- data.3polo %>%
   mutate(hits_score=mapvalues(searches, from = c(NA),
                               to = c(0)))
 
+export(data.3polo, "terzopolo_keywords.csv")
