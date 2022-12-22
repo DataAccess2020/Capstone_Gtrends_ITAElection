@@ -1,33 +1,57 @@
 #individual plot for each subject with the distribution of his/her keywords
 
+library(lubridate)
+library(plotly)
+
 #plot - Giorgia Meloni-----
 
-#library(viridis)
-#
-#ggplot(data.meloni, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
-#  geom_line(size=1) +
-#  scale_color_viridis(discrete = TRUE, option = "viridis") +
-#  theme_bw()
-
+data.meloni$date <- as_date(data.meloni$date)
 
 meloni_plot <- ggplot(data.meloni, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
-  theme_bw()
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Giorgia Meloni", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+           plot.subtitle = element_text(hjust = 0.5))
 
-meloni_plot
+
+meloni_plot_int <- ggplotly(meloni_plot)
 
 #plot - Enrico Letta----
 
+data.letta$date <- as_date(data.letta$date)
+
 letta_plot <- ggplot(data.letta, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
-  theme_bw()
-letta_plot
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2", "gold3"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Enrico Letta", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+letta_plot_int <- ggplotly(letta_plot)
+
+
 #plot - Matteo Salvini-----
+
+data.salvini$date <- as_date(data.salvini$date)
 
 salvini_plot <- ggplot(data.salvini, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
-  theme_bw()
-salvini_plot
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2", "gold3"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Matteo Salvini", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+salvini_plot_int <- ggplotly(salvini_plot)
 
 #plot - Silvio Berlusconi----
 
