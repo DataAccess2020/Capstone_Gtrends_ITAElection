@@ -1,0 +1,58 @@
+---
+title: "**The predictive capacity of Google Trends:**"
+subtitle: "Italian parliamentary election of 2022"
+author: "Francesca Martinoli"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## **Introduction**
+
+Polls and data analysis have always been widely used during electoral campaigns; the recent spread of the internet has allowed access to large amounts of new data. In this scenario, many studies have shown the elevate predictive capacity of Google Trends, as a tool for making data prediction either in social, economic or health field.
+
+## **Question research**
+
+Inspired by a [*Prado-Román's study*]{.underline} - ([Google Trends as a Predictor of Presidential Elections: the United States versus Canada](https://journals.sagepub.com/doi/pdf/10.1177/0002764220975067?download=true)), this project proposes to testing the hypothesis that the Google Trends tool have an elevate predictive capacity in anticipate the winner of the elections. The aim of this little study is to demonstrate the ability of Google Trends as a predictor of the winner of the Italian parliamentary election of 2022.
+
+## **Data and Tools**
+
+In order to get the data I need for my analysis, I used the [Google Trends](https://trends.google.it/trends/?geo=IT) API provided by Google, which allows to get data about search volume for single search terms or comparisons, over a selected time period. The results are return in a standardized measure: Google assign a measure of popularity to search terms, scaled between 0 and 100.
+
+To interact with Google Trends API I used the `gtrendsR` package ([more info](https://github.com/PMassicotte/gtrendsR)), that allows to get data from Google Trends and displays them into a dataset with many information about interest over time (search volume), interest by country, region or city, related topics and related queries. For my purpose, I only used the data about `interest over time`, which contain information about the search volume for the single search terms I am interest in.
+
+In this project I decided to analyze the data from the July 21st 2022, the day news elections were announced by President Mattarella, and the September 25th 2022, the "election day": they are the months of electoral campaigns.
+
+For the analysis I transformed the variable `hits` into a numeric variable `hit_score`, recoding the value "\< 1" into zero.
+
+## **Exploratory analysis**
+
+At first, I chose to explore the single research terms for each relevant political actor of the 2022 election: I compared the `surname` and `name + surname` of the party leader, the `party name` and sometimes the party's `acronym`.
+
+```{r plot, echo=FALSE, message = F, warning = F, fig.align = 'center', fig.dim = c(9, 4)}
+library(rio)
+library(ggplot2)
+library(tidyverse)
+library(plyr)
+library(lubridate)
+library(plotly)
+data.meloni <- import(here::here("data/meloni_keywords.csv"))
+
+data.meloni$date <- as_date(data.meloni$date)
+
+meloni_plot <- ggplot(data.meloni, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Giorgia Meloni", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+           plot.subtitle = element_text(hjust = 0.5))
+
+ggplotly(meloni_plot)
+
+```
