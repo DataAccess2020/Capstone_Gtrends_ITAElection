@@ -20,6 +20,10 @@ meloni_plot <- ggplot(data.meloni, aes(y = hits_score, x = date, group = keyword
 
 meloni_plot_int <- ggplotly(meloni_plot)
 
+setwd("")
+
+export(meloni_plot_int, "Meloni_plot_int.html")
+
 #plot - Enrico Letta----
 
 data.letta$date <- as_date(data.letta$date)
