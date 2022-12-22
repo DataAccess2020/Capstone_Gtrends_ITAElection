@@ -55,19 +55,45 @@ salvini_plot_int <- ggplotly(salvini_plot)
 
 #plot - Silvio Berlusconi----
 
+data.berlu$date <- as_date(data.berlu$date)
+berlusconi_key
 berlu_plot <- ggplot(data.berlu, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
-  theme_bw()
-berlu_plot
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Silvio Berlusconi", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+berlu_plot_int <- ggplotly(berlu_plot)
 
 #plot - Giuseppe Conte-----
+
+data.conte$date <- as_date(data.conte$date)
+
 conte_plot <- ggplot(data.conte, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
-  theme_bw()
-conte_plot
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2", "gold3"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Giuseppe Conte", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+conte_plot_int <- ggplotly(conte_plot)
 
 #plot - terzo polo: Calenda e Renzi----
+
+data.3polo$date <- as_date(data.3polo$date)
+
 terzopolo_plot <- ggplot(data.3polo, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
-  theme_bw()
-terzopolo_plot
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2", "gold3"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Terzo polo", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+terzopolo_plot_int <- ggplotly(terzopolo_plot)
