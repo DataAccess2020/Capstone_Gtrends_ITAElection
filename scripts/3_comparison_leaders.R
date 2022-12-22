@@ -4,6 +4,7 @@ library(gtrendsR)
 library(rio)
 library(tidyverse)
 library(ggplot2)
+library(dplyr)
 
 leaders_surname <- c("meloni", "letta", "salvini", "berlusconi")
 leaders_surname2 <- c("meloni", "conte", "calenda", "renzi")
@@ -43,7 +44,7 @@ data_leader2 <- as.data.frame(party_leaders2$interest_over_time)
 data_leader2 <- data_leader2[-(1:67),]
 #delete rows in the second data frame which keyword' is "meloni", so we have these only once
 
-#merge the two dataset usign the date as a key
+#merge the two dataset using the date as a key
 library(dplyr)
 merge_data <- bind_rows(data_leader1, data_leader2)
 
@@ -53,3 +54,13 @@ merge_data$hits_score <- as.numeric(merge_data$hits)
 
 rio::export(merge_data, "all_keywords_complete.csv")
 
+
+#calculate the mean for each keyword----
+
+leader_means <- merge_data %>% 
+  group_by(keyword) %>% 
+  summarize(
+    key_m = mean(hits, na.rm = T) 
+  )
+
+leader_means
