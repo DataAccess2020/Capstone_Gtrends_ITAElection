@@ -60,7 +60,12 @@ rio::export(merge_data, "all_keywords_complete.csv")
 leader_means <- merge_data %>% 
   group_by(keyword) %>% 
   summarize(
-    key_m = mean(hits, na.rm = T) 
+    hits_mean = mean(hits_score, na.rm = T) 
   )
 
-leader_means
+
+
+leader_means <- as.data.frame(leader_means)
+rio::export(leader_means, "comparison_means.csv")
+
+
