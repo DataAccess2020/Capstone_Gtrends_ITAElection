@@ -10,6 +10,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Github repository [Capstone_Gtrends_ITAElection](https://github.com/DataAccess2020/Capstone_Gtrends_ITAElection.git)
+
+
 ## **Introduction**
 
 Polls and data analysis have always been widely used during electoral campaigns; the recent spread of the internet has allowed access to large amounts of new data. In this scenario, many studies have shown the elevate predictive capacity of Google Trends, as a tool for making data prediction either in social, economic or health field.
@@ -141,5 +144,36 @@ ggplotly(terzopolo_plot)
 For Enrico Letta and Giuseppe Conte I chose to include also the acronym of the party, which are the most used in the common language and also by the media.
 Moreover, I decide to analyze Matteo Renzi and Carlo Calenda at the same time, since they ran together in the elections; I also included the term "terzo polo" which is an informal way used by the media to indicate their coalition.
 
-It is interesting to note that the surnames are usually the most searched term for each actor, expect for Enrico Letta: we can see that the acronym "pd" was more searched than "Letta". we can hypothesize that it is due to a minor personalization of his party, compared with the populist parties in the competition.  
+It is interesting to note that the surnames are usually the most searched term for each actor, expect for Enrico Letta: we can see that the acronym "pd" was more searched than "Letta". we can hypothesize that it is due to a minor personalization of his party, compared with the populist parties in the competition.
+
+## **Comparison and Results**
+
+It is important to notice that the previous studies on the predictive capacity of Google Trends usually focused on presidential elections, which usually include only two candidates and are characterized by high political personalisation.
+In this project I decided to analyze the italian parliamentary election, which includes many political actors and are characterized by low political personalization (compared to presidential elections). 
+
+In order to compare the different political actors, I decided to use the leader's `surname`, which I notice is the most used term for each actor (expect for Letta), and not `name + surname` as it was done by [*Prado-Román*]{.underline} in his study. 
+
+```{r echo=FALSE, message = F, warning = F, fig.align = 'center', fig.dim = c(9, 4)}
+
+
+merge_data <- import(here::here("data/all_keywords_complete.csv"))
+
+merge_data$date <- as_date(merge_data$date)
+
+leaders_plot <- ggplot(merge_data, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  scale_color_manual(values = c("purple3", "deepskyblue3", "darkorange2", "gold3", "orchid3", "royalblue4", "chartreuse4"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Comparison between leaders", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+ggplotly(leaders_plot)
+```
+
+
+
+
 

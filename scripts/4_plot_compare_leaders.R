@@ -5,11 +5,6 @@ library(plotly)
 
 #plot for all party leaders: surname----
 
-leaders_plot <- ggplot(merge_data, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
-  geom_line(size=1) +
-  theme_bw()
-leaders_plot
-
 merge_data$date <- as_date(merge_data$date)
 
 leaders_plot <- ggplot(merge_data, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
