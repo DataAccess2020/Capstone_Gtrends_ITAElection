@@ -14,7 +14,7 @@ Github repository: [Capstone_Gtrends_ITAElection](https://github.com/DataAccess2
 
 Github statistics:
 
--   Commits: 32
+-   Commits: 33
 
 -   Issues opened: 1
 
@@ -31,6 +31,31 @@ Inspired by a [*Prado-Román's study*]{.underline} - ([Google Trends as a Predic
 In order to get the data I need for my analysis, I used the [Google Trends](https://trends.google.it/trends/?geo=IT) API provided by Google, which allows to get data about search volume for single search terms or comparisons, over a selected time period. The results are return in a standardized measure: Google assign a measure of popularity to search terms, scaled between 0 and 100.
 
 To interact with Google Trends API I used the `gtrendsR` package ([more info](https://github.com/PMassicotte/gtrendsR)), that allows to get data from Google Trends and displays them into a dataset with many information about interest over time (search volume), interest by country, region or city, related topics and related queries. For my purpose, I only used the data about `interest over time`, which contain information about the search volume for the single search terms I am interest in.
+
+An example of getting data from Google Trend API using `gtrendsR` package:
+```{r eval=FALSE, message = F, warning = F}
+library(gtrendsR)
+
+#I create a vector which include all the keywords I need
+
+meloni_key <- c("meloni", "giorgia meloni", "fratelli d'italia") #Google Search is not case sensitive
+
+#get data from Google trends, storing them into an object
+
+meloni <- gtrends(
+  keyword = meloni_key, #specify the keywords
+  geo = "IT", #specify the geographic regions for the query
+  time = "2022-07-21 2022-09-25", #specify the time span of the query
+  gprop = c("web"), #specify the Google product for which the trend query if preformed
+  hl = "it", #specify the ISO language code (
+  compared_breakdown = FALSE,
+  low_search_volume = FALSE,
+  cookie_url = "http://trends.google.com/Cookies/NID",
+  onlyInterest = FALSE
+)
+
+```
+
 
 In this project I decided to analyze the data from the July 21st 2022, the day news elections were announced by President Mattarella, to the September 25th 2022, the "election day": they are the months of electoral campaigns.
 
