@@ -1,5 +1,4 @@
-# The predictive capacity of Google Trends:
-## Italian parliamentary election of 2022
+# The predictive capacity of Google Trends: *Italian parliamentary election of 2022*
 
 ## A project by ***Francesca Martinoli***: 
 
@@ -10,6 +9,8 @@ Polls and data analysis have always been widely used during electoral campaigns;
 ## **Question research**
 
 Inspired by a [*Prado-Román's study*]{.underline} - ([Google Trends as a Predictor of Presidential Elections: the United States versus Canada](https://journals.sagepub.com/doi/pdf/10.1177/0002764220975067?download=true)), this project proposes to testing the hypothesis that the Google Trends tool have an elevate predictive capacity in anticipate the winner of the elections. The aim of this little study is to demonstrate the ability of Google Trends as a predictor of the winner of the Italian parliamentary election of 2022.
+
+![Logo](figs/compare_leaders.jpeg)
 
 ## **Data and Tools**
 
@@ -29,6 +30,7 @@ The main steps for this analysis are:
 -   Analyze the comparison between political leaders
 -   Display a graphic visualization of the results
 -   Conclusion
+
 
 ## Folders labels
 
