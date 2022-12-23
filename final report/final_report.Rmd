@@ -30,6 +30,15 @@ In this project I decided to analyze the data from the July 21st 2022, the day n
 
 For the analysis I transformed the variable `hits` into a numeric variable `hit_score`, recoding the value "\< 1" into zero. For the main dataset which contains all the keywords I need, I had to merge different dataset obtain through many interaction with Google Trend API, because this tool allows to get information only for 5 keywords at time. At last, in order to display the results I used the packages `ggplot2` to build plots and `plotly` to transform them into intercative plots, which I think are useful in this situation because some graphs are a little confused.
 
+## **Work flow:**
+
+For main steps for this analsis are:
+-   Getting data from Google Trend API using the `gtrendsR` package
+-   Clean and analyze the data for each political actor
+-   Analyze the comparison between political leaders
+-   Display a graphic visualization of the results
+-   Conclusion
+
 ## **Exploratory analysis**
 
 At first, I chose to explore the single research terms for each relevant political actor of the 2022 election: I compared the `surname` and `name + surname` of the party leader, the `party name` and sometimes the party's `acronym`.
@@ -174,15 +183,18 @@ We can see that "Meloni" was the most searched term, as we can expect from the r
 
 We can see this pattern also by the comparison of averages of the search volume for each surname:
 
-```{r, echo= FALSE, message = F, warning = F}
-leader_means <- import(here::here("data/comparison_means.csv"))
 
-library(knitr)
-kable(leader_means)
+| Leader | Hits mean (scale 0-100) |
+| ----- | -----|
+| Meloni | 12.59 |
+| Conte | 7.73 |
+| Berlusconi | 6,67 |
+| Calenda | 5,70 |
+| Salvini | 4.13 |
+| Renzi | 3.07 |
+| Letta | 2.88 |
 
-```
-
-The volume search for "meloni" has an average of 12.6; the second highest average has a difference of 5 points, in a scale 0-100 (Conte = 7.73) and the other surnames' averages vary from 3.07 for "Renzi" (the less searched) and 6.67 for "Berlusoni", so are much lower than 12.6.
+The volume search for "meloni" has an average of 12.6; the second highest average has a difference of 5 points, in a scale 0-100 (Conte = 7.73) and the other surnames' averages vary from 2.88 for "Letta" (the less searched) and 6.67 for "Berlusoni", so are much lower than 12.6.
 
 To make a better comparison, I divided the plot into many different plots, one for each actors, because I think it is less confused.
 
