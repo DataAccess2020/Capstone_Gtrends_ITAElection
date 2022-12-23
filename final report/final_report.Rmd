@@ -32,13 +32,14 @@ For the analysis I transformed the variable `hits` into a numeric variable `hit_
 
 At first, I chose to explore the single research terms for each relevant political actor of the 2022 election: I compared the `surname` and `name + surname` of the party leader, the `party name` and sometimes the party's `acronym`.
 
-```{r plot, echo=FALSE, message = F, warning = F, fig.align = 'center', fig.dim = c(9, 4)}
+```{r echo=FALSE, message = F, warning = F, fig.align = 'center', fig.dim = c(9, 4)}
 library(rio)
 library(ggplot2)
 library(tidyverse)
 library(plyr)
 library(lubridate)
 library(plotly)
+
 data.meloni <- import(here::here("data/meloni_keywords.csv"))
 
 data.meloni$date <- as_date(data.meloni$date)
@@ -51,8 +52,94 @@ meloni_plot <- ggplot(data.meloni, aes(y = hits_score, x = date, group = keyword
   ggtitle("Giorgia Meloni", subtitle = "interest over time") +
   scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
   theme(plot.title = element_text(face = "bold", hjust = 0.5),
-           plot.subtitle = element_text(hjust = 0.5))
+           plot.subtitle = element_text(hjust = 0.5),
+        legend.position = "Bottom")
 
 ggplotly(meloni_plot)
+```
+
+For Matteo Salvini I decided to include also the old party name "Lega Nord", that sometimes results more searched than the actual name "Lega per Salvini premier". 
+
+```{r echo=FALSE, message = F, warning = F, fig.align = 'center', fig.dim = c(9, 4)}
+data.salvini <- import(here::here("data/salvini_keywords.csv"))
+
+data.salvini$date <- as_date(data.salvini$date)
+
+salvini_plot <- ggplot(data.salvini, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2", "gold3"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Matteo Salvini", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+ggplotly(salvini_plot)
+
+data.berlu <- import(here::here("data/berlusconi_keywords.csv"))
+data.berlu$date <- as_date(data.berlu$date)
+
+berlu_plot <- ggplot(data.berlu, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Silvio Berlusconi", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+ggplotly(berlu_plot)
+
+
+data.letta <- import(here::here("data/letta_keywords.csv"))
+data.letta$date <- as_date(data.letta$date)
+
+letta_plot <- ggplot(data.letta, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2", "gold3"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Enrico Letta", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+ggplotly(letta_plot)
+
+data.conte <- import(here::here("data/conte_keywords.csv"))
+data.conte$date <- as_date(data.conte$date)
+
+conte_plot <- ggplot(data.conte, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2", "gold3"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Giuseppe Conte", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+ggplotly(conte_plot)
+
+
+data.3polo <- import(here::here("data/terzopolo_keywords.csv"))
+data.3polo$date <- as_date(data.3polo$date)
+
+terzopolo_plot <- ggplot(data.3polo, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
+  geom_line(size=1) +
+  scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2", "gold3"), "keyword") +
+  ylab("hits") +
+  xlab("date") +
+  ggtitle("Terzo polo", subtitle = "interest over time") +
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "10 days") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+ggplotly(terzopolo_plot)
 
 ```
+
+For Enrico Letta and Giuseppe Conte I chose to include also the acronym of the party, which are the most used in the common language and also by the media.
+Moreover, I decide to analyze Matteo Renzi and Carlo Calenda at the same time, since they ran together in the elections; I also included the term "terzo polo" which is an informal way used by the media to indicate their coalition.
+
+It is interesting to note that the surnames are usually the most searched term for each actor, expect for Enrico Letta: we can see that the acronym "pd" was more searched than "Letta". we can hypothesize that it is due to a minor personalization of his party, compared with the populist parties in the competition.  
+

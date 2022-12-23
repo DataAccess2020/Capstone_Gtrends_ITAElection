@@ -60,7 +60,7 @@ salvini_plot_int <- ggplotly(salvini_plot)
 #plot - Silvio Berlusconi----
 
 data.berlu$date <- as_date(data.berlu$date)
-berlusconi_key
+
 berlu_plot <- ggplot(data.berlu, aes(y = hits_score, x = date, group = keyword, color=keyword)) +
   geom_line(size=1) +
   scale_color_manual(values = c("purple", "deepskyblue3", "darkorange2"), "keyword") +
