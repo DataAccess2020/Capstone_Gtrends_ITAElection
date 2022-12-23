@@ -10,7 +10,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Github repository [Capstone_Gtrends_ITAElection](https://github.com/DataAccess2020/Capstone_Gtrends_ITAElection.git)
+Github repository: [Capstone_Gtrends_ITAElection](https://github.com/DataAccess2020/Capstone_Gtrends_ITAElection.git)
+
+Github statistics:
+
+-   Commits: 32
+
+-   Issues opened: 1
 
 ## **Introduction**
 
@@ -32,11 +38,16 @@ For the analysis I transformed the variable `hits` into a numeric variable `hit_
 
 ## **Work flow:**
 
-For main steps for this analsis are:
+The main steps for this analysis are:
+
 -   Getting data from Google Trend API using the `gtrendsR` package
+
 -   Clean and analyze the data for each political actor
+
 -   Analyze the comparison between political leaders
+
 -   Display a graphic visualization of the results
+
 -   Conclusion
 
 ## **Exploratory analysis**
@@ -183,16 +194,15 @@ We can see that "Meloni" was the most searched term, as we can expect from the r
 
 We can see this pattern also by the comparison of averages of the search volume for each surname:
 
-
-| Leader | Hits mean (scale 0-100) |
-| ----- | -----|
-| Meloni | 12.59 |
-| Conte | 7.73 |
-| Berlusconi | 6,67 |
-| Calenda | 5,70 |
-| Salvini | 4.13 |
-| Renzi | 3.07 |
-| Letta | 2.88 |
+| Leader     | Hits mean (scale 0-100) |
+|------------|-------------------------|
+| Meloni     | 12.59                   |
+| Conte      | 7.73                    |
+| Berlusconi | 6,67                    |
+| Calenda    | 5,70                    |
+| Salvini    | 4.13                    |
+| Renzi      | 3.07                    |
+| Letta      | 2.88                    |
 
 The volume search for "meloni" has an average of 12.6; the second highest average has a difference of 5 points, in a scale 0-100 (Conte = 7.73) and the other surnames' averages vary from 2.88 for "Letta" (the less searched) and 6.67 for "Berlusoni", so are much lower than 12.6.
 
